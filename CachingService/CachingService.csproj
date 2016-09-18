@@ -61,6 +61,7 @@
     <Compile Include="MyServiceKingAopStyleImpl.cs" />
     <Compile Include="MyServiceDynamicProxyStyleImpl.cs" />
     <Compile Include="CastleDynamicProxy\CallInterceptor.cs" />
+    <Compile Include="CachedAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

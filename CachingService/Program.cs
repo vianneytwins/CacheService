@@ -35,8 +35,11 @@ namespace CachingService
             builder.RegisterType<MyServiceDynamicProxyStyleImpl>()
                 .As<IMyService>()
                 .EnableInterfaceInterceptors();
+            //  .InterceptedBy(typeof(CallLogger));
 
             builder.Register(c => new CallLogger());
+
+
 
             Container = builder.Build();
 

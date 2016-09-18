@@ -7,6 +7,7 @@ namespace CachingService
     [Intercept(typeof(CallLogger))]
     public class MyServiceDynamicProxyStyleImpl :IMyService
     {
+        [Cached]
         public virtual MyDataType Get(string id)
         {
             return new MyDataType {
