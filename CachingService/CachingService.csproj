@@ -38,6 +38,16 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="KingAOP">
+      <HintPath>..\packages\KingAOP.1.0.0\lib\KingAOP.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.DynamicProxy2">
+      <HintPath>..\packages\Autofac.Extras.DynamicProxy2.3.0.7\lib\net40\Autofac.Extras.DynamicProxy2.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -45,12 +55,18 @@
     <Compile Include="MyCache.cs" />
     <Compile Include="TypedObjectCache.cs" />
     <Compile Include="MyDataType.cs" />
-    <Compile Include="MyService.cs" />
     <Compile Include="IMyService.cs" />
     <Compile Include="LoggingModule.cs" />
+    <Compile Include="MyFirstAspect.cs" />
+    <Compile Include="MyServiceKingAopStyleImpl.cs" />
+    <Compile Include="MyServiceDynamicProxyStyleImpl.cs" />
+    <Compile Include="CastleDynamicProxy\CallInterceptor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CastleDynamicProxy\" />
   </ItemGroup>
 </Project>

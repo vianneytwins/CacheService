@@ -1,14 +1,17 @@
 using System;
 using Autofac;
 using System.Collections.Generic;
+using System.Dynamic;
+using KingAOP;
+using System.Linq.Expressions;
 
 namespace CachingService
 {
-    public class MyService : IMyService
+    public class MyServiceKingAopStyleImpl : IMyService, IDynamicMetaObjectProvider
 	{
         private TypedObjectCache<MyDataType> cache;
 
-        public MyService(TypedObjectCache<MyDataType> cache)
+        public MyServiceKingAopStyleImpl(TypedObjectCache<MyDataType> cache)
         {
             this.cache = cache;
         }
@@ -23,6 +26,7 @@ namespace CachingService
             };
         }
 
+        [MyFirstAspect]
         public MyDataType Get(string id)
         {
             var returnData = new MyDataType();
@@ -30,9 +34,15 @@ namespace CachingService
             return returnData;
         }
 
+        [MyFirstAspect]
         public List<MyDataType> GetAll()
         {
             return this.cache.GetAllCachedItems();
+        }
+
+        public DynamicMetaObject GetMetaObject(Expression parameter)
+        {
+            return new AspectWeaver(parameter, this); // this AspectWeaver will inject AOP mechanics.
         }
 	}
 
