@@ -1,6 +1,7 @@
 ﻿using System;
 using log4net;
 using System.Runtime.Caching;
+using System.Collections.Generic;
 
 namespace fody
 {
@@ -50,6 +51,26 @@ namespace fody
                 this.logger.Info(String.Format("Removing Element {0} in Cache", key));
                 cache.Remove(key);
             }
+        }
+
+        /// <summary>
+        /// Retrieves all Element in the cache for a given type. Probably super bad in terms of performance
+        /// TODO VC : Find a better way to do it (cache region or TypedCached ?)
+        /// </summary>
+        /// <returns>The all.</returns>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        public System.Collections.Generic.List<T> RetrieveAll<T>()
+        {
+            var returnItems = new List<T>();
+            foreach (var item in cache)
+            {
+                if (item is T)
+                {
+                    returnItems.Add((T)item.Value);
+                }
+            }
+
+            return returnItems;
         }
 
         private void LogCacheExpirationCallBack(CacheEntryRemovedArguments arguments) 

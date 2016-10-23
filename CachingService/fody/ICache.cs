@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace fody
 {
@@ -11,6 +12,8 @@ namespace fody
         void Store(string key, object data);
 
         void Remove(string key);
+
+        List<T> RetrieveAll<T>();
     }
 
 }
