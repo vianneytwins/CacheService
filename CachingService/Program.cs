@@ -4,6 +4,7 @@ using System.Timers;
 using System.Threading;
 using log4net.Config;
 using Autofac;
+using fody;
 
 namespace CachingService
 {
@@ -24,17 +25,26 @@ namespace CachingService
             //var myCache = new TypedObjectCache<MyDataType>(typeof(MyDataType).ToString());
             //builder.RegisterInstance(myCache).ExternallyOwned();
 
+            /**
             builder.RegisterType<TypedObjectCache<MyDataType>>()
                 .WithParameter("name", typeof(MyDataType).ToString())
                 .SingleInstance();
+            */
 
 
             // KingAop style
-            builder.RegisterType<MyServiceKingAopStyleImpl>().As<IMyService>(); 
+            //builder.RegisterType<MyServiceKingAopStyleImpl>().As<IMyService>(); 
 
-            builder.RegisterType<MyServiceDynamicProxyStyleImpl>()
-                .As<IMyService>()
-                .EnableInterfaceInterceptors();
+
+            //Fody Style 
+            builder.RegisterType<FodyCache>().As<ICache>(); 
+            builder.RegisterType<MyFodyService>().As<IMyService>();
+
+
+            //Dynamic proxystyle
+            //builder.RegisterType<MyServiceDynamicProxyStyleImpl>()
+            //    .As<IMyService>()
+            //    .EnableInterfaceInterceptors();
             //  .InterceptedBy(typeof(CallLogger));
 
             builder.Register(c => new CallLogger());
@@ -55,14 +65,14 @@ namespace CachingService
 
 
                 var data = service.Get("Funky");
-                /*
+
                 Console.WriteLine(data);
                 Thread.Sleep(1000);
                 data = service.Get("Funky2");
                 Console.WriteLine(data);
                 data = service.Get("Funky");
                 Console.WriteLine(data);
-
+                /*
                 Console.WriteLine("Let's try the get All");
                 var items = service.GetAll();
                 Console.WriteLine(items.Count);
